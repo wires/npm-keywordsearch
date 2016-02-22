@@ -1,0 +1,25 @@
+{
+  "name": "npm-keywordsearch",
+  "version": "0.1.0",
+  "description": "Get name and description of NPM packages matching a keyword",
+  "main": "npm-keywordsearch.js",
+  "scripts": {
+    "test": "node example/fancy.js"
+  },
+  "keywords": [
+    "npm",
+    "search",
+    "keyword",
+    "node"
+  ],
+  "author": "Jelle 'wires' Herold <jelle@defekt.nl>",
+  "license": "AGPL-1.0",
+  "devDependencies": {
+    "chalk": "^1.1.1",
+    "minimist": "^1.2.0"
+  },
+  "dependencies": {
+    "npm-registry-client": "^7.0.9",
+    "silent-npm-registry-client": "^2.0.0"
+  }
+}
