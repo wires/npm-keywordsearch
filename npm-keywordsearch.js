@@ -1,17 +1,18 @@
 var RegClient = require('silent-npm-registry-client')
 var stream = require('stream')
-var client = new RegClient({logstream: new stream.Writable()})
-var urlfmt = require('url').format
+var url = require('url')
 var strfmt = require('util').format
+var prttty = require('prttty').render
 
 // based off
 // https://stackoverflow.com/questions/13657140/how-to-get-all-npm-packages-that-match-a-particular-keyword-in-json-format
 
-function searchUri (keyword) {
-  return urlfmt({
-    protocol: 'https',
-    host: 'registry.npmjs.org',
-    pathname: '/-/_view/byKeyword',
+function searchUri (registryURL, keyword) {
+  var u = url.parse(registryURL)
+  return url.format({
+    protocol: u.protocol,
+    host: u.host,
+    pathname: /^\/?$/.test(u.pathname) ? '/-/_view/byKeyword' : u.pathname,
     query: {
       startkey: strfmt('["%s"]', keyword),
       endkey: strfmt('["%s",{}]', keyword),
@@ -22,9 +23,24 @@ function searchUri (keyword) {
 
 var params = { timeout: 1000 }
 
+// pass keyword
 module.exports = function keywordSearch (keyword, callback) {
+  var options = (typeof keyword === 'object') ? keyword : {
+    keyword: keyword,
+    registryURL: 'https://registry.npmjs.org/',
+    debug: true
+  }
+
+  // to log or not to log
+  var log = options.debug ? console.log.bind(console) : function () {}
+
+  // construct registry client
+  var client = new RegClient({logstream: new stream.Writable()})
+
   // construct registry url
-  var uri = searchUri(keyword)
+  var uri = searchUri(options.registryURL, options.keyword)
+
+  log('Querying', uri)
 
   client.get(uri, params, function (error, data, raw, res) {
     // pass errors to callback
@@ -34,6 +50,7 @@ module.exports = function keywordSearch (keyword, callback) {
     // data is the parsed data object
     // raw is the json string
     // res is the response from couch
+    log('Response', prttty(data || raw))
 
     callback(null, data.rows.map(function (r) {
       // This is what a row looks like:

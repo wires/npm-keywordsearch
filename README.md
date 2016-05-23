@@ -30,7 +30,21 @@ search('my-plugin', function (error, packages) {
 })
 ```
 
+You can also pass an alternative registry URL:
+
+```js
+var opts = {
+	// you must add the `byKeyword` view if it is not the default path
+	registryURL: 'https://registry.npmjs.org/-/_view/byKeyword',
+	keyword: 'my-plugin',
+  debug: true
+}
+
+search(opts, function (error, packages) {
+	packages.forEach(function (pkg) {
+		console.log(pkg.name + ': ' + pkg.description)
+	})
+})
+```
+
 Based of http://stackoverflow.com/a/13657540/72787.
-
-#### Related
-
