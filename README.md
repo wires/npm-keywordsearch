@@ -4,6 +4,9 @@ This queries the NPM registry with
 [`npm-registry-client`](https://github.com/npm/npm-registry-client)
 It lists all packages matching a keyword using the CouchDB view `byKeyword`.
 
+This is useful is you are writing a plugin system for instance, or an
+installer based of NPM.
+
 #### Install
 
 ```sh
@@ -31,5 +34,3 @@ Based of http://stackoverflow.com/a/13657540/72787.
 
 #### Related
 
-If you want a build a plugin system out of this,
-https://github.com/c9/architect does a good job.
