@@ -6,6 +6,9 @@
   "scripts": {
     "test": "node example/fancy.js"
   },
+  "files": [
+    "npm-keywordsearch.js"
+  ],
   "keywords": [
     "npm",
     "search",
