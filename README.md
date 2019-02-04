@@ -1,3 +1,9 @@
+
+This is no longer needed, try
+
+- [`libnpmsearch`](https://www.npmjs.com/package/libnpmsearch)
+- [`npm-keyword`](https://www.npmjs.com/package/npm-keyword)
+
 # Fetch list of packages on NPM with specified keyword
 
 This queries the NPM registry with
